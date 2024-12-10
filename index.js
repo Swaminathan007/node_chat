@@ -13,9 +13,9 @@ const io = socketIo(server);
 passport.use(
   new GoogleStrategy(
     {
-      clientID:
-        "687805914544-lerrsrb0ik1u50jr5jbojedq0bf8goi7.apps.googleusercontent.com",
-      clientSecret: "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",
+      clientID:process.env.GOOGLE_CLIENT_ID
+        ,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL:
         "http://localhost:3000/auth/google/callback",
     },
@@ -57,7 +57,6 @@ app.set('view engine', 'ejs');
 
 // Routes
 app.get('/', (req, res) => {
-  console.log("Hello world!");
   res.sendFile(__dirname+"/public/login.html")
 });
 
@@ -92,7 +91,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        if(username != undefined){
+        if(socket.username != undefined){
             io.emit('chat message', `${socket.username} left the chat`);
         }
     });
