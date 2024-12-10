@@ -16,7 +16,7 @@ passport.use(
       clientID:process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL:
-        "https://node-chat-nine.vercel.app//auth/google/callback",
+        "https://node-chat-nine.vercel.app/auth/google/callback",
     },
     (token, tokenSecret, profile, done) => {
       return done(null, profile);
@@ -32,8 +32,10 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-// Middleware
+// // Middleware
 app.use(express.static("public"));
+// app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(
   session({
     secret: "secret",
